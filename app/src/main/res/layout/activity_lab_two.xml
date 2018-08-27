@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".LabTwo">
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Hello Android" />
+
+    <ImageView android:id="@+id/img"
+               android:src="@drawable/sample"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:maxHeight="300dp"
+               android:maxWidth="500dp"
+               android:adjustViewBounds="true"
+               android:scaleType="centerCrop"
+               android:layout_alignParentBottom="true"/>
+
+
+</RelativeLayout>
