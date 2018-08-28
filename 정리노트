@@ -753,3 +753,105 @@ Resource?
             in?
             권장하는 단위?
                 유동적인 dp 단위 계산법과 스마트폰 크기
+
+
+앱 데이터의 영속화
+    SQLite?
+        - 오픈 소스 관계형 데이터베이스. 서버에서 구동되는 서버가 아닌 어플리케이션의 라이브러리를 이용, 로컬에 데이터를 저장.
+        로컬 데이터베이스의 필요성?
+            - 모바일의 네트워크는 신뢰성이 낮아 일정 정도 데이터를 로컬 디바이스에 저장해야 된다.
+            때문에 로컬 데이터베이스의 중요성은 상대적으로 높은 편.
+
+    SQLiteDatabase?
+        - 안드로이드 데이터베이스 핵심 클래스.
+        DML, DDL 모두 처리한다.
+
+        Activity.openOrCreateDatabase(String name, int mode, CursorFactory factory)?
+            - SQLiteDatabase 객체를 리턴한다. name 은 데이터베이스 파일명.
+
+        SQLiteDatabase.execSQL(String sql, ?String[] bindArgs)?
+            - INSERT, UPDATE, DELETE 문을 처리한다.
+            SQL 파라미터 ('?')?
+                - 가변 인자. 런타임시 SQL 파라미터를 인자의 값으로 바인딩한다.
+            SQLiteDatabase.insert(String table, String nullColumnHack, ContentValues values)?
+            SQLiteDatabase.update(String table, ContentValues values, String whereClause, String[] whereArgs)?
+            SQLiteDatabase.delete(String table, String whereClause, String[] whereArgs)?
+        SQLiteDatabase.rawQuery(String sql, String[] electionArgs, Object[] bindArgs)?
+            - SELECT (쿼리) 를 처리한다. SQL 파라미터가 없을 시 null 로 대체하라.
+            SQLiteDatabase.query(String table, String[] columns, String selections, String[] selectionArgs, String groupBy, String having, String orderBy, String limit)?
+
+            Cursor?
+                - 쿼리를 통해 가져온 데이터의 한 행(ROW). 한 행을 표현하며, 여러 열(COLUMNS) 의 값을 가져온다.
+                boolean Cursor.moveToNext()?
+                    - 순서상 다음 행으로 이동
+                Cursor.moveToFirst()?
+                    - 가장 첫 번째 행으로 이동.
+                Cursor.moveToLast()?
+                    - 가장 마지막 행으로 이동.
+                Cursor.moveToPrevious()?
+                    - 순서상 이전 행으로 이동.
+                Cursor.getString(int colNum)?
+                    - 지정한 열의 값을 가져온다.
+
+        SQLiteOpenHelper?
+            데이터베이스를 관리하는 추상 클래스. 이 클래스를 상속하여 사용한다. ex) 테이블 생성 혹은 스키마 변경.
+            SQLiteOpenHelper.onCreate()?
+                - 앱이 설치된 이후 SQLiteOpenHelper 을 상속한 클래스가 최초로 이용된 순간 한 번 호출.
+            SQLiteOpenHelper.onUpgrade()?
+                - 데이터베이스 version 이 변경될 때마다 호출.
+            SQLiteDatabase getWritableDatabase()?
+                - SQLiteDatabase 객체를 리턴한다.
+
+    Realm?
+        - ORM 방식의 데이터 영속화 목적으로 사용하는 로컬 데이터베이스.
+        ORM?
+            - Object-Relational Mappings. 테이블의 데이터를 해석해 객체에 직접 매핑 자동 지원.
+        플러그인 설정?
+            - 프로젝트 수준의 그레이들 파일에 의존성을 설정.
+        프로젝트 수준의 그레이들?
+            - root/build.gradle
+        realm 플러그인 추가?
+            - root/build.gradle 에 dependencies 에 "classpath: 'io.realm:realm-gradle-plugin:2.2.0'" 추가
+
+        VO와 RealObject?
+            Value Object 클래스. Realm 의 ORM 을 위해 RealmObject 를 상속해야 한다.
+            Realm 이 자동 해석해 데이터를 테이블에 저장 혹은 저장된 객체를 객체로 맵핑한다.
+
+        Realm 객체?
+            Realm.init(Context context)?
+                - Initializes the Realm library and creates a default configuration that is ready to use.
+                - 앱 구동시 한번만 하면 되는듯..
+            Realm.getDefaultInstance()?
+                - Realm 객체를 획득한다.
+
+            데이터 저장?
+                Realm.executeTransaction(Real.Transaction transaction)?
+                    - 데이터 저장. Transaction.execute(Realm realm) 을 구현하여 사용.
+                Realm.createObject(Class realmObjectClass)?
+                    - Transaction.execute(Realm realm) 에서 저장할 RealmObject 를 생성시 사용.
+
+            데이터 삭제?
+                RealmObject.deleteFromRealm()?
+                Realm.delete(Class realmObjectClass)?
+
+            쿼리?
+                Realm.where()?
+                    - RealmQuery 객체를 획득
+                RealmQuery.findFirst()?
+                RealmQuery.findAll()?
+                RealmQuery.findAllSorted(String fieldName)?
+                RealmQuery.findAllSorted(String fieldName, Sort sortOrder)?
+                RealmQuery.findAllSortied(String[] fieldNames, Sort[] sortOrders)?
+
+                조건절?
+                    equalTo()?
+                    between()?
+                    beginsWith()?
+                    endsWith()?
+                    isNOtNull()?
+                    in()?
+                    isNull()?
+                    lessThan()?
+                    lessThanOrEqualTo()?
+                    contains()?
+                    like()?
