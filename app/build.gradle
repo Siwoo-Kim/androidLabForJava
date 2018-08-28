@@ -1,7 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 26
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.android.siwoo.androidlabforjava"
         minSdkVersion 18
@@ -15,6 +17,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
 }
 

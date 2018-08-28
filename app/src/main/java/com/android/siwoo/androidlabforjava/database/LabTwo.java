@@ -1,16 +1,14 @@
-package com.android.siwoo.androidlabforjava.resource;
+package com.android.siwoo.androidlabforjava.database;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 import com.android.siwoo.androidlabforjava.R;
 
-public class LabOne extends AppCompatActivity {
+public class LabTwo extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lab_one2);
+        setContentView(R.layout.activity_lab_two2);
     }
 }
