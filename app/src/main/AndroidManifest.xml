@@ -23,7 +23,16 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".LabTwo" android:theme="@style/myTheme">
+        <activity
+                android:name=".LabTwo"
+                android:theme="@style/myTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".resource.LabOne">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

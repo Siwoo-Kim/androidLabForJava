@@ -728,3 +728,28 @@ Resource?
                     android:theme?
                     앱 테마와 액티비티 테마?
 
+    스마트폰 크기 호환성?
+        mipmap 폴더?
+           mipmap 과 기기 환경 조건?
+        리소스 폴더명과 대시(-)
+            폴더명에 명시할 수 있는 조건?
+            폴더명 명시 규칙?
+                ex) res/values/values-ko-rKR/strings.xml
+                ex) layout/activity_main.xml 과 layout-land/activity_main.xml
+        DisplayMetrics?
+            widthPixels?
+            heightPixels?
+            densityDpi?
+            density?
+            scaleDensity?
+            xdi?
+            ydpi?
+        화면의 단위 크기
+            dp(dip)?
+            sp(sip)?
+            pt(pt)?
+            px?
+            mm?
+            in?
+            권장하는 단위?
+                유동적인 dp 단위 계산법과 스마트폰 크기
