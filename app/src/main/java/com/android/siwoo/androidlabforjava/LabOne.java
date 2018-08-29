@@ -24,6 +24,7 @@ public class LabOne extends AppCompatActivity implements View.OnClickListener, C
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
             initX = event.getRawX();
         } else if(event.getAction() == MotionEvent.ACTION_UP) {

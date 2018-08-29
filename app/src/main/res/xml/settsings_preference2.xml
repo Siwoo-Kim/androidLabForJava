@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="새 메시지 알림">
+        <SwitchPreference
+            android:key="message"
+            android:title="메시지 알림"/>
+        <PreferenceScreen
+                android:key="keyword_screen"
+                android:title="키워드 알림"
+                android:summary="사용안함">
+            <SwitchPreference
+                android:key="keyword"
+                android:defaultValue="false"
+                android:title="키워드 알림"
+                android:summary="키워드 알림을 사용합니다"/>
+            <ListPreference
+                android:key="keyword_list"
+                android:summary="카톡"
+                android:title="키워드 전용 알림음"
+                android:dependency="keyword"
+                android:entries="@array/array_voice"
+                android:entryValues="@array/array_voice"/>
+        </PreferenceScreen>
+        <SwitchPreference
+            android:key="sound"
+            android:title="소리"
+            android:defaultValue="false" />
+        <ListPreference
+            android:key="sound_list"
+            android:summary="카톡"
+            android:title="알림음"
+            android:entries="@array/array_voice"
+            android:entryValues="@array/array_voice" />
+    </PreferenceCategory>
+</PreferenceScreen>
