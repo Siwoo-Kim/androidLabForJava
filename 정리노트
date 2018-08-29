@@ -136,43 +136,69 @@ MainActivity.java
 
 
 UI 액티비티-뷰 구조
-액티비티?
-뷰?
-setContentView(View view)
-setContentView(int layoutResID)
+    Activity(액티비티)?
+        - 안드로이드 4개의 컴포넌트 중 하나로써 화면 출력을 담당한다.
+    뷰(View)?
+        - UI 이자 Activity 의 내용물.
+    Activity.setContentView(View view)
+    Activity.setContentView(int layoutResID)
+        - 액티비티에서 뷰를 출력한다.
+    두가지 UI 작성법?
+        - Activity 의 자바 코드로의 작성과 layout XML 파일 이용.
 
-두가지 UI 작성법?
-LinearLayout
-레이아웃 XML?
-Launcher Activity?
-<LinearLayout>?
-<Button>?
+    레이아웃 XML?
+        - XML 파일을 이용해 UI(View) 를 구성한다.
+        Launcher Activity?
+            - 다른 액티비티와 관련없이 독립적으로 실행한다.
 
-뷰 태그의 속성?(뷰 태그 == 뷰)
-TextView?
-id 속성?
-R.id
-findViewById
 
-layout_width, layout_height?
-    match_parent
-    fill_content
-    wrap_content
-    100px
-    margin
-    padding
+    뷰 태그의 기초 속성?
+        - 뷰의 기초 속성이란 모든 뷰에서 사용하는 공통 속성을 의미한다.
+        id 기초 속성?
+            - 뷰의 식별자 속성. id 속성으로 자바 코드에서 참조 가능.
+            *TextView?
+                    - 문자열을 출력하는 뷰
+            *R.java?
+                - R 은 리소스(Resource) 을 의미한다. id 식별자는 리소스에 등록된다.
+        Activity.findViewById(int resId)?
+            - 등록한 id 식별자로 View 의 인스턴스를 획득.
 
-margin, padding - dp
+        layout_width, layout_height 기초 속성?
+            - 뷰의 화면 표시 크기를 지정한다.
+            layout_width 은 가로, layout_height 은 세로 크기를 결정한다.
 
-clickable
+            match_parent, fill_content?
+                - 해당 뷰의 크기가 부모 뷰의 크기를 모두 차지한다.
+            wrap_content
+                - Content 의 크기에 맞춰 자동으로 뷰의 크기를 결정한다.
+            [Number]px
+                - 픽셀로 뷰의 크기를 직접 조정한다.
+
+        margin 기초 속성?
+            - 뷰와 뷰 사이의 간격을 지정한다.
+                : layout_marginLeft, layout_marginRight, layout_marginTop, layout_marginBottom
+        padding 기초 속성?
+            - 뷰의 테두리(변) 과 뷰의 내용물의 간격을 지정한다.
+            padding 이 커질수록 화면의 차지 비율이 늘어난다.
+                : paddingLeft, paddingRight, paddingTop, paddingBottom
+
+        clickable 기초 속성?
+            - TextView, ImageView 은 clickable 속성의 true 을 지정해야 클릭 이벤트에 반응한다.
+            *사실이 아니다?
+
 TextView, ImageView의 clickable 속성
 
-visibility
-    true, invisible, gone
-    invisible과 gone의 차이
+        visibility 기초 속성?
+            - 뷰이 가시성을 설정한다.
+            :true, invisible, gone
+            invisible 과 gone 의 차이?
+                - invisible 과 gone 은 모두 가시성을 잃지만
+                invisible 은 크기를 확보한 상태이고
+                gone 은 크기를 확보하지 않는다.
 
-setVisibility()
-
+            View.setVisibility(int visibility)
+                - 자바 코드에서 가시성을 설정한다.
+                * View.VISIBLE, View.INVISIBLE, View.GONE
 View.OnClickListener?
 
 뷰의 계층구조
