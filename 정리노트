@@ -186,8 +186,6 @@ UI 액티비티-뷰 구조
             - TextView, ImageView 은 clickable 속성의 true 을 지정해야 클릭 이벤트에 반응한다.
             *사실이 아니다?
 
-TextView, ImageView의 clickable 속성
-
         visibility 기초 속성?
             - 뷰이 가시성을 설정한다.
             :true, invisible, gone
@@ -199,54 +197,81 @@ TextView, ImageView의 clickable 속성
             View.setVisibility(int visibility)
                 - 자바 코드에서 가시성을 설정한다.
                 * View.VISIBLE, View.INVISIBLE, View.GONE
-View.OnClickListener?
 
-뷰의 계층구조
-View?
-ViewGroup?
-TextView?
+    뷰의 계층구조?
+        - 복잡한 화면을 구성하기 위해 뷰 객체 간의 계층을 이룬다.
+        DOM (Document Object Model) 구조를 따르며 Composite 패턴이 적용된 구조이다.
 
-레이아웃 XML로 계층구조 구현 방법?
-자바 코드로 계층구조 구현 방법?
+        View 클래스?
+            - 화면을 구성하기 위한 클래스.
+            모든 View 의 최상위 클래스이면서 UI 의 Widget 과 동의어.
+            Activity 에서 출력되는 클래스는 모두 View 의 서브 클래스이다.
+        ViewGroup 클래스?
+            - View 의 서브 클래스이자 View 의 컨테이너(Container).
+            뷰를 논리적인 그룹으로 묶는다.
+            ex) Layout 클래스
 
-뷰 클래스
-    TextView?
-        android:text?
-        android:typeface?
-        setTypeFace()?
-        android:textStyle?
-        android:textColor?
-        android:textSize?
-        android:autoLink? *
-        maxLines?
-        ellipsize?
 
-    ImageView?
-        android:src
-        android:maxWidth, android:maxHeight
-        android:adjustViewBounds?
-        android:tint?
+        layout XML 로 계층구조 구현 방법?
+            - 태그의 상하 관계를 이용한다.
+        자바 코드로 계층구조 구현 방법?
+            - public void View.addView(View view) 함수를 이용한다.
 
-    EditText?
-        android:lines?
-        android:maxLines?
-        android:inputType?
-        android:text?
-        android:textMultiLine
-        android:gravity
+    뷰 클래스
+        - 안드로이드는 다양한 뷰 클래스를 제공한다.
+        TextView?
+            - 문자열을 화면에 출력하는 View
+            TextView 의 속성?
+                android:text?
+                    - 화면에 출력하는 문자열
+                android:typeface?
+                    - 문자열의 폰트를 지정.
+                        : normal, sans, serif, monospace
+                    public static Typeface createFromAsset(AssetManager mgr, String path)?
+                        - 리소스로 부터 Typeface 객체를 획득한다.
+                    View.setTypeface(Typeface typeface)?
+                        - Typeface 객체를 이용하여 출력하는 문자열의 폰트를 바꾼다.
+                android:textStyle?
+                    - 문자열 효과를 지정
+                        : normal, bold, italic
+                android:textColor?
+                    - 문자열의 색상을 변경.
+                android:textSize?
+                    - 문자열 폰트의 크기를 지정.
+                android:autoLink? *
+                    - 문자열을 parsing 해 링크 형태로 변환한다. 링크 형태의 단어들은 자동으로 다양한 Activity 로 연결된다.
+                    : web, email, phone
+                maxLines?
+                    - 최대 문자열을 지정한다. 문자열을 넘어선 뷰 화면에서 문자열들은 생략된다.
+                ellipsize?
+                    - maxLines 와 같이 사용하며, 문자열이 지정한 최대 문자열을 초과할 시 줄임 표시(..) 를 추가한다.
 
-    Button?
-        Checkbox extends CompoundButton?
-            isChecked()
-            setChecked(boolean)
-            toggle()
-            setOnCheckedChangeListener(OnCheckedChangeListener)
-        RadioButton extends CompoundButton?
-            RadioGroup?
+        ImageView?
+            android:src
+            android:maxWidth, android:maxHeight
+            android:adjustViewBounds?
+            android:tint?
 
-assets 폴더?
-strings.xml?
-res/drawable
+        EditText?
+            android:lines?
+            android:maxLines?
+            android:inputType?
+            android:text?
+            android:textMultiLine
+            android:gravity
+
+        Button?
+            Checkbox extends CompoundButton?
+                isChecked()
+                setChecked(boolean)
+                toggle()
+                setOnCheckedChangeListener(OnCheckedChangeListener)
+            RadioButton extends CompoundButton?
+                RadioGroup?
+
+    assets 폴더?
+    strings.xml?
+    res/drawable
 
 
 UI 액티비티-뷰 구조
