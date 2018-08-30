@@ -20,9 +20,9 @@ public class LabThree extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lab_three);
 
-        titleView = findViewById(R.id.realm_add_title);
-        contentView = findViewById(R.id.realm_add_content);
-        addButton = findViewById(R.id.realm_add_btn);
+//        titleView = findViewById(R.id.realm_add_title);
+//        contentView = findViewById(R.id.realm_add_content);
+//        addButton = findViewById(R.id.realm_add_btn);
         addButton.setOnClickListener(this);
     }
 

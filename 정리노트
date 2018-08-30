@@ -1116,3 +1116,101 @@ Resource?
                     SharedPreferences.registerOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener listener)?
                         - 설정 내용을 변경할 때마다 발생하는 이벤트의 콜백.
 
+
+AdapterView?
+    - 목록 혹은 항목을 나열하는 뷰. 목록의 각 항목은 Adapter 클래스.
+    AdapterView 의 종류?
+        - ListView, GridView, Spinner
+    Adapter?
+        - 목록의 항목을 추상화한 클래스.
+        항목을 생성하기 위하여 Adapter 클래스와 layout XML 그리고 데이터가 필요하다.
+
+        Adapter 의 종류?
+            -  SpinnerAdapter, ListAdapter, BaseAdapter: ArrayAdapter, SimpleAdapter, CursorAdapter
+        ArrayAdapter?
+            - 각 항목을 하나의 문자열로 순서대로 나열할 때 사용한다.
+            ArrayAdapter<T>(Context context, int resource, T[] array)?
+                - 미리 제공된 layout XML 을 기반으로 ArrayAdapter 인스턴스를 획득한다.
+                int resource?
+                    - 항목 하나를 구성하기 위한 layout XML 의 식별자.
+                    라이브러리 layout XML
+                        - 라이브러리에서 제공하는 미리 정의된 layout XML
+                        android.R.layout.simple_list_item_1?
+                            - 문자열 하나인 항목
+                        android.R.layout.simple_list_item_2?
+                            - 위아래로 나열된 두 개의 문자열로 구성된 항목
+                        android.R.layout.simple_list_item_multiple_choice?
+                            - 문자열과 오른쪽 checkbox 로 구성된 항목
+                        android.R.layout.simple_list-item_single_choice?
+                            - 문자열과 오른쪽 radio 로 구성된 항목
+           public ArrayAdapter(@Context context, int resource, int textViewResourceId, T[] array)
+                - 커스텀 layout XML 을 기반으로 ArrayAdapter 인스턴스를 획득한다.
+                커스텀 layout XML?
+                    - 커스텀 layout XML 은 데이터 array 의 값을 어디에 노출해야 될지 안드로이드는 모르니, int textviewResourceId 로 TextView 의 식별자를 지정해야 한다.
+
+            AdapterView.setAdapter(Adapter adapter)?
+                - AdapterView 에 Adapter 를 등록한다.
+
+           항목 클릭 이벤트?
+                OnItemClickListener, OnItemLongClickListener 인터페이스?
+                    - 각 항목이 클릭되었을 때 이벤트 처리를 위한 인터페이스
+                View.setOnItemClickListener(Context context)?
+                Adapter.notifyDataSetChanged()?
+
+        SimpleAdapter?
+            - 각 항목에 여러 문자열 데이터를 나열할 때 사용한다.
+            항목에 노출될 데이터는 ArrayList<HashMap<String, T>> 형식을 사용한다.
+            ArrayList<HashMap<String, String>> ?
+                - SimpleAdapter 는 한 항목이 여러 문자열로 구성되므로 List<Map<>> 형식의 데이터를 사용한다.
+
+            SimpleAdapter(Context context, List<? extends Map<String, ?>> data,
+                        @int resource, String[] from, int[] to)?
+                        String[] from 와 int[] to)?
+                - List<Map<String,?> data 는 항목 구성 데이터, int resource 는 각 항목을 위한 layout XML,
+                new String[] 은 항목 구성 데이터의 키 값, new int[] 는 데이터를 맵핑할 뷰의 식별자.
+
+        *Context 란?
+            - 시스템의 전역 정보나 어플리케이션의 환경 등에 접근하는 법을 제공하는 클래스.
+            컴포넌트는 Context 을 상속한다.
+
+            startActivity(), startService(), stopService(), bindService(),
+            unbindService(), sendBroadcast() ?
+                - 컴포넌트 실행 함수.
+            registerReceiver(), unregisterReceiver()?
+                - 브로드캐스트 리시버를 동적 등록 혹은 해제.
+            getResources()?
+                - 앱의 리소스를 획득
+            getSystemService()?
+                - 시스템 레벨의 서비스를 획득
+
+        CursorAdapter?
+            - 데이터베이스에서 쿼리한 데이터 Cursor 로 데이터를 자동으로 추출해 항목을 구성.
+            Cursor?
+            SimpleCursorAdapter(Context context, int rayoutId, Cursor cursor, String[] from, int[] to, int flag)?
+
+    커스텀 Adapter?
+        - 라이브러리 어뎁터가 제공하는 화면 구성이 아닌 직접 구성하기 위한 커스텀 Adapter 클래스.
+        커스텀 Adapter 의 필요성 세가지?
+            - ListAdapter 와 SimpleAdapter 로는 개발자가 원하는 화면 구성을 다 구현할 수 없다.
+            1. 개발자의 알고리즘대로 항목의 데이터가 설정되어야 할 때.
+            2. 개발자의 알고리즘대로 항목별 뷰의 이벤트를 처리해야 할 때.
+            3. 개발자의 알고리즘대로 항목별 레이아웃을 다르게 처리해야 할 때.
+        커스텀 Adapter 정의?
+            - 항목별 데이터를 추상화한 VO 클래스, BaseAdapter 혹은 ArrayAdapter 을 상속받은 Adapter 클래스.
+            커스텀 Adapter extends ArrayAdapter<T>?
+                getCount()?
+                    - 전체 항목의 갯수를 리턴한다.
+                View getView(int position, View contentView, ViewGroup parent)?
+                    - 항목 하나의 화면을 구성한다. 즉 항목의 갯수만큼 호출된다.
+                    int position 은 항목의 index, View 은 ArrayAdapter, 리턴 값은 해당 항목을 구성한 View 가 리턴.
+
+                LayoutInflater?
+                    - layout XML 을 초기화하는 클래스.
+                    View inflate(int resource, ViewGroup root) {
+                        - int resource 식별자에 해당하는 뷰를 초기화 한다.
+                    레이아웃 초기화 성능 issue?
+                        - 항목의 데이터만 변하지 레이아웃은 변하지 않는다. getView() 함수의 layout XML 초기화는 한번만 하고 캐쉬하는 것이 성능상 유리하다.
+                    findViewById() 성능 issue?
+                        - 항목은 여러 View 로 구성되어 있으며 뷰 안의 데이터만 바뀐다., getView() 함수의 findViewId() 함수는 각 뷰마다 한번씩만 호출하고 캐쉬하는 것이 성능상 유리하다.
+
+
