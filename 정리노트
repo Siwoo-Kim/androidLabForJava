@@ -1214,3 +1214,42 @@ AdapterView?
                         - 항목은 여러 View 로 구성되어 있으며 뷰 안의 데이터만 바뀐다., getView() 함수의 findViewId() 함수는 각 뷰마다 한번씩만 호출하고 캐쉬하는 것이 성능상 유리하다.
 
 
+Spannable?
+    Spannable 의 필요성?
+    SpannableStringBuilder 과 StyleSpan?
+    뷰에 Spannable 적용?
+        android:bufferType="spannable"?
+        SpannableStringBuilder
+            SpannableStringBuilder(String string)?
+           /**
+            * Mark the specified range of text with the specified object.
+            * The flags determine how the span will behave when text is
+            * inserted at the start or end of the span's range.
+            */
+           void SpannableStringBuilder.setSpan(Object what, int start, int end, int flags)?
+                int flag?
+                    EXCLUSIVE or INCLUSIVE 좌우측의 문자열에 SPAN 적용 여부
+                                _왼     쪽_오  른   쪽_
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE?
+                    Spanned.SPAN_EXCLUSIVE_INCLUSIVE?
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE?
+                    Spanned.SPAN_INCLUSIVE_INCLUSIVE?
+           void setBounds(int left, int top, int right, int bottom)?
+           ForegroundColorSpan?
+           BackgroundColorSpan?
+           UnderlineSpan?
+           ClickableSpan?
+           AbsoluteSizeSpan
+           RelativeSizeSpan?
+           ImageSpan?
+           StyleSpan?
+           URLSpan?
+
+    Html.fromHTML() 함수?
+        fromHtml(String source)?
+        *deprecated fromHtml(String source, Html.ImageGetter imageGetter, Html.TagHandler tagHandler)?
+        fromHtml(String source, int flag, Html.ImageGetter imageGetter, Html.TagHandler tagHandler)?
+
+
+
+
