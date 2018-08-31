@@ -15,4 +15,24 @@
         <item>제주도</item>
         <item>충청북도</item>
     </string-array>
+
+    <string-array name="languages">
+        <item>Korean</item>
+        <item>English</item>
+        <item>Spanish</item>
+        <item>Japanese</item>
+        <item>Danish</item>
+        <item>French</item>
+    </string-array>
+
+    <string-array name="players">
+        <item>류현진</item>
+        <item>박찬호</item>
+        <item>박찬홍</item>
+        <item>추신수</item>
+        <item>이대호</item>
+        <item>오승환</item>
+        <item>김현수</item>
+        <item>강정호</item>
+    </string-array>
 </resources>

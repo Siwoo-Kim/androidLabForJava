@@ -1215,11 +1215,21 @@ AdapterView?
 
 
 Spannable?
+    - 뷰의 문자열 데이터를 표현하는 클래스. 문자열과 UI 정보로 구성되어 있다.
     Spannable 의 필요성?
-    SpannableStringBuilder 과 StyleSpan?
+        - 뷰에서는 문자열 뿐만 아니라 문자열의 화면에 출력하는 방식 (폰트, 크기, 백그라운드 색) 등이 필요하다.
+        즉 문자열(Spannable) 이 스스로가 UI 정보를 포함한다.
+    SpannableStringBuilder 과 Span?
+        - Spannable 은 SpannableStringBuilder 로 생성하며, SpannableStringBuilder.setSpan() 의 인자인 Span 클래스는 UI 의 정보를 지닌다.
     뷰에 Spannable 적용?
+        - TextView 의 butterType 의 값을 'spannable' 로 설정 이후,
+        View.setText() 함수의 인자로 생성한 SpannableStringBuilder 를 전달한다.
+
         android:bufferType="spannable"?
+            - TextView 가 spannable 을 참조해서 화면 출력하기 위한 설정.
+            EditText 에서는 기본 값이 'editable' 이며, 따로 속성 설정하지 않아도 spannable 을 사용 가능하다.
         SpannableStringBuilder
+            - Spannable 인스턴스을 생성하는 Builder 클래스
             SpannableStringBuilder(String string)?
            /**
             * Mark the specified range of text with the specified object.
@@ -1227,29 +1237,161 @@ Spannable?
             * inserted at the start or end of the span's range.
             */
            void SpannableStringBuilder.setSpan(Object what, int start, int end, int flags)?
+                - Object what(Span) 정보를 이용해 UI 를 설정한다.
                 int flag?
+                    - Span 이 적용된 좌우측 문자열에 Span 정보를 적용할지를 설정한다.
                     EXCLUSIVE or INCLUSIVE 좌우측의 문자열에 SPAN 적용 여부
                                 _왼     쪽_오  른   쪽_
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE?
                     Spanned.SPAN_EXCLUSIVE_INCLUSIVE?
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE?
                     Spanned.SPAN_INCLUSIVE_INCLUSIVE?
-           void setBounds(int left, int top, int right, int bottom)?
-           ForegroundColorSpan?
-           BackgroundColorSpan?
-           UnderlineSpan?
-           ClickableSpan?
-           AbsoluteSizeSpan
-           RelativeSizeSpan?
-           ImageSpan?
-           StyleSpan?
-           URLSpan?
+
+           Span 클래스의 종류?
+               ForegroundColorSpan?
+                    - 전경 색상값 적용.
+               BackgroundColorSpan?
+                    - 배경 색상값 적용.
+               UnderlineSpan?
+                    - 밑줄 적용.
+               ClickableSpan?
+                    - 문자열 클릭 이벤트 적용.
+               AbsoluteSizeSpan
+                    - 크기 변경 적용.
+               RelativeSizeSpan?
+                    - 상대적 크기 적용.
+               ImageSpan?
+                    - 이미지 데이터 적용.
+                   ResourceCompat.getDrawable(Resources resources, int drawableId, Theme theme)?
+                        - 리소스의 Drawable(이미지) 인스턴스를 획득한다.
+                   void Drawable.setBounds(int left, int top, int right, int bottom)?
+                        - 이미지의 크기를 설정한다.
+               StyleSpan?
+                    - 스타일 적용.
+               URLSpan?
+                    - URL 링크 모양과 클릭 이벤트 적용.
 
     Html.fromHTML() 함수?
-        fromHtml(String source)?
-        *deprecated fromHtml(String source, Html.ImageGetter imageGetter, Html.TagHandler tagHandler)?
-        fromHtml(String source, int flag, Html.ImageGetter imageGetter, Html.TagHandler tagHandler)?
+         - Spannable 대신에 문자열과 UI 정보를 같이 표현하는 다른 방법.
+         HTML 태그 방식을 이용해 표현한다.
+            fromHtml(String source)?
+            *deprecated fromHtml(String source, Html.ImageGetter imageGetter, Html.TagHandler tagHandler)?
+            fromHtml(String source, int flag, Html.ImageGetter imageGetter, Html.TagHandler tagHandler)?
+                - String source 은 HTML, Html.ImageGetter 은 Drawable 인스턴스를 리턴하는 객체.
+                Drawable ImageGetter.getDrawable(String source)
+                    - 이미지 획득 한다. String source 은 <img> 태그의 src 속성값.
 
+WebView?
+    - 웹 페이지를 보여주는 내장 브라우저 역할을 하는 뷰.
+    하이브리드앱을 개발할 때 쓰이는 기술.
+    하이브리드앱?
+        - 하나의 코드로 다른 형식의 ex(안드로이드나 IOS 앱)을 만드는 기술.
+        HTML, CSS, Javascript 을 이용해 앱을 만들고 WebView 로 띄우는 방식.
+    네트워킹 퍼미션?
+        - 시스템의 자원인 네트워킹을 이용하므로 AndroidManifest.xml 에 퍼미선 사용을 요청해야 한다.
+        <uses-permission android:name="android.permission.INTERNET" />
+            - 앱의 인터넷 사용 권한을 요청한다.
+    layout XML 의 <WebView> 태그?
+        - 웹 페이지를 보여주는 WebView 를 layout XML 에 정의한다.
+    WebView?
+        - 웹 페이지를 보여주는 뷰 클래스. 출력될 URL 을 지정해야 화면에 페이지가 렌더링된다.
+        WebSettings?
+            - WebView 인스턴스의 정보를 지닌 클래스.
+            WebSettings.setJavascriptEnabled(boolean enabled)?
+                - 자바스크립트를 허용할지를 설정.
+        WebView.loadUrl(String url)?
+            - 출력될 URL 을 지정한다.
+            * file:///  - 앱 내부의 HTML 파일을 로드한다.
+            * javascript:func() - 로드한 HTML 파일에 정의된 함수를 호출한다.
+        내부 HTML 파일 로드하기?
+            - HTML 파일을 assets 폴더에 저장한 후, WebView.loadUrl("file:///[파일이름]") 형식으로 로드한다.
+            assets 폴더?
+                - 개발자 파일 중 리소스 대상이 아닌 나머지 파일이 위치하는 곳 ex) HTML, CSS, Javascript
+    자바스크립트와 자바 연동?
+        - WebView 을 이용하면 자바스크립트와 자바의 함수를 연동해 사용할 수 있다.
+        자바 공개 클래스?
+            - 클래스를 정의해 자바의 함수를 자바스크립트에서 사용한다.
+            @JavascriptInterface 어노테이션?
+                - @JavascriptInterface 어노테이션이 적용된 함수만 자바스크립트에서 호출할 수 있다.
+            WebView.addJavascriptInterface(Object toJavascriptClass, String objectInJavascript)?
+                - 정의한 Object toJavascriptClass 를 전달하며, String objectInJavascript 의 이름으로 자바스크립트에서 참조할 수 있다.
+            js) window.[objectInJavascript].[함수명]()
+                ex) js) var data = window.android.getCharData()
+                - 자바스크립트에서 자바 함수를 호출한다.
+        자바스크립트 함수를 자바에서?
+            WebView.loadUrl("javascript:함수호출")
 
+    이벤트 처리?
+        - 자바스크립트 이벤트를 자바에서 처리할 수 있다.
+        WebViewClient?
+            - 다양한 자바스크립트 사용자 이벤트 콜벡 함수 정의를 지원한다.
+            boolean WebViewClient.shouldOverrideUrlLoading(WebView, String url)?
+                - 새로운 URL 로딩시 발생하는 이벤트
+        WebChromeClient?
+            - 브라우저 자체의 이벤트를 처리한다. ex) alert() 함수.
+            onJsAlert()?
+            JsResult.confirm()?
 
+    기타 유용한 뷰
+        콤보박스: Spinner?
+            - 여러 항목 중 하나를 선택할 수 있게 구성된 뷰 (콤보박스)
+            AdapterView 을 상속한 클래스이며 Adapter 을 이용하여 구성한다.
+
+            ArrayAdapter?
+                - 하나의 문자열로 구성된 항목의 목록.
+                android.R.layout.simple_dropdown_item_1line?
+                    - 안드로이드 라이브러리에서 제공하는 펼침목록 layout.
+                ArrayAdapter.setDropDownViewResource(int layoutResId)?
+                    - 목록의 항목을 펼칠때 보여질 layout 을 지정.
+                    android.R.layout.simple_spinner_item?
+                        - 안드로이드 라이브러리에서 제공하는 펼침 목록의 항목 layout.
+                android:prompt?
+                    - spinnerMode 가 dialog 일시 보여질 타이틀 문자열을 지정.
+                android:spinnerMode?
+                    - dialog 로 설정시 Spinner 가 Dialog 형식으로 렌더링
+
+        텍스트 자동완성: AutoCompleteTextView?
+            ArrayAdapter?
+                android.R.layout.simple_dropdown_item_1line?
+            <AutoCompleteTextView> 태그?
+                android:completionThreshold?
+                android:completionHint?
+                android:dropDownWidth?
+                android:dropDownHeight?
+                android:dropDownVerticalOffset?
+                android:dropDownHorizontalOffset?
+
+        프로그레스바: ProgressBar?
+            - 일의 진행 상황을 표시하기 위한 뷰.
+            ProgressBar 의 두가지 스타일?
+                - 원 모양, 막대 모양.
+                    원 모양(default)?
+                        - 작업의 시작과 끝을 알 수 없을 때 사용.
+                    막대 모양(progressBarStyleHorizontal)
+                        - 작업과 시작의 끝이 정확할 때.
+            <ProgressBar> 태그?
+                - layout XML 에 ProgressBar 뷰를 정의한다.
+                style?
+                    - 막대 모양 style 설정시 ?android:attr/progressBarStyleHorizontal 로 지정한다.
+                android:max?
+                    - 작업 진행 상황의 최대치를 숫자로 지정한다.
+            ProgressBar?
+                ProgressBar.setProgress(int progress)?
+                    - 현재 진행 상황의 수치를 지정한다.
+                ProgressBar.incrementProgressBy(int diff)?
+                    - 현재 진행 상황의 수치에서 diff 값을 더한다.
+                secondaryProgress?
+                    ProgressBar.setSecondaryProgress(int secondaryProgress)?
+                    ProgressBar.setSecondaryProgressBy(int diff)?
+
+        값을 입력받는 프로그레스바: SeekBar
+            - ProgressBar 와 동일하지만, 사용자로부터 진행 수치를 입력받을 수 있다.
+            <SeekBar> 태그
+                android:max?
+                android:progress?
+            SeekBar?
+                SeekBar.setOnSeekBarChangeListener(SeekBar.OnSeekBarChangeListener listener)?
+                    SeekBar.OnSeekBarChangeListener.onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)?
+                    SeekBar.OnSeekBarChangeListener.onStartTrackingTouch(SeekBar seekBar)?
+                    SeekBar.OnSeekBarChangeListener.onStopTrackingTouch(SeekBar seekBar)?
 
