@@ -17,49 +17,46 @@ import android.widget.TextView;
 import com.android.siwoo.androidlabforjava.R;
 
 public class StepOne extends AppCompatActivity {
-    private ScrollView mainScroll;
     private TextView simpleText;
     private TextView htmlText;
     private static final String SIMPLE_TEXT
-            = "The title\n img \n I took the picture when I was in vacation";
+            = "The title\n img \n I took the picture when I was in vacation :-)";
+    private static final String HTML_TEXT
+            = "<font color='lightblue'>Second</font><br/><img src='img2'/> <br/> I also took this one, enjoy life!";
     private static final String IMG_FLAG = "img";
-    private static final String TITLE_FLAG = "The title";
-    public static final String HTML_TEXT
-            = "<font color='RED'>Flower</font> <br/> <img src='img2' /> <br/> I got this one, too!";
-    Html.ImageGetter imageGetter = source -> {
-        if(source.equals("img2")) {
+    private static final String TITLE_FLG = "The title";
+    private static final String IMG_TAG_VALUE = "img2";
+    private final Html.ImageGetter imageGetter = (value) -> {
+        if(value.equals("img2")) {
             Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.img2, null);
             drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
             return drawable;
         }
         return null;
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_one3);
 
-        init();
         simpleText = findViewById(R.id.simple_text);
-        simpleText.setMovementMethod(new ScrollingMovementMethod());
-
         SpannableStringBuilder builder = new SpannableStringBuilder(SIMPLE_TEXT);
         int start = SIMPLE_TEXT.indexOf(IMG_FLAG);
         if(start > -1) {
             int end = start + IMG_FLAG.length();
-            Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.img1 , null);
+            Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.img1, null);
             drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
             ImageSpan imageSpan = new ImageSpan(drawable);
-            builder.setSpan(imageSpan, start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            builder.setSpan(imageSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
-
-        start = SIMPLE_TEXT.indexOf(TITLE_FLAG);
+        start = SIMPLE_TEXT.indexOf(TITLE_FLG);
         if(start > -1) {
-            int end = start + TITLE_FLAG.length() + 2;
+            int end = start + TITLE_FLG.length() + 2;
             StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
-            RelativeSizeSpan sizeSpan = new RelativeSizeSpan(2.f);
-            builder.setSpan(styleSpan, start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-            builder.setSpan(sizeSpan, start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            RelativeSizeSpan sizeSpan = new RelativeSizeSpan(2.0f);
+            builder.setSpan(styleSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            builder.setSpan(sizeSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         simpleText.setText(builder);
 
@@ -67,11 +64,5 @@ public class StepOne extends AppCompatActivity {
         htmlText.setText(Html.fromHtml(HTML_TEXT, imageGetter, null));
     }
 
-    private void init() {
-        initSimpleText();
-    }
 
-    private void initSimpleText() {
-
-    }
 }

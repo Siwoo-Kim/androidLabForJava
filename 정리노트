@@ -405,6 +405,10 @@ assets 폴더?
 strings.xml?
 res/drawable
 
+레이아웃 (layout)?
+    레이아웃의 종류?
+
+    LinearLayout?
 
 
 TableLayout?
@@ -1394,4 +1398,182 @@ WebView?
                     SeekBar.OnSeekBarChangeListener.onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)?
                     SeekBar.OnSeekBarChangeListener.onStartTrackingTouch(SeekBar seekBar)?
                     SeekBar.OnSeekBarChangeListener.onStopTrackingTouch(SeekBar seekBar)?
+
+
+ActionBar?
+    - 여러 기능을 갖춘 타이틀 바.
+    ActionBar 의 구성?
+        - 액티비티가 출력되는 창을 Window 라 부르며, Window 는 Content 영역과 ActionBar 영역으로 나뉜다.
+        Window?
+            - 액티비티가 출력되는 전체 창.
+            Content 영역?
+                - setContentView(View view) 함수로 출력되는 View 영역.
+            ActionBar 영역?
+                - Window 의 한 영역이며 App Icon, View Control, Action Button, Overflow Menu 로 구성.
+
+        ActionBar 비활성화?
+            - res/values/styles.xml 파일에 테마를 설정할 때, windowActionBar 을 false, windowNoTitle 을 true 로 지정.
+            res/values/styles.xml?
+                - 테마 설정 파일.
+                <item name="windowNoTitle">
+                <item name="windowActionBar">
+        ActionBar 배경 이미지 Overlay.
+                - res/values/styles.xml 파일에 테마를 설정할 때, <item name="windowActionBarOverlay"> 을 true 로 설정한다.
+
+        ActionBar 객체 획득?
+            - Activity.getSupportActionBar() 함수로 획득한다.
+        ActionBar 제어?
+            ActionBar.show()?
+                - ActionBar 가 화면에서 나타난다.
+            ActionBar.hide()?
+                - ActionBar 가 화면에서 숨겨진다.
+        ActionBar 표시 옵션?
+            ActionBar 의 label?
+                - AndroidManifest.xml 파일의 <activity> 태그에 android:label 속성으로 label(액션바 타이틀) 설정.
+            ActionBar.setDisplayHomeAsUpEnabled(boolean showHomeAsUp)?
+                - 아이콘을 Up 이미지로 표시 설정 (아이콘을 표시할 지의 여부 설정)
+            ActionBar.setDisplayShowCustomEnabled(boolean showCustom)?
+                - CustomView 표시 설정
+            ActionBar.setDisplayShowHomeEnabled(boolean showHome)?
+                - 홈 아이콘(icon image) 표시 설정
+            ActionBar.setDisplayShowTitleEnabled(boolean showTitle)?
+                - 타이틀 문자열 표시 설정
+            ActionBar.setDisplayUseLogoEnabled(boolean useLogo)?
+                - 로고 표시 설정
+            ActionBar.setLogo(int resId), ActionBar.setLogo(Drawable logo)?
+                - 로고 지정.
+            ActionBar.setTitle(int resId), ActionBar.setTitle(CharSequence subtitle)?
+                - 타이틀 지정
+            ActionBar.setSubtitle(int resId), ActionBar.setSubtitle(CharSequence subtitle)?
+                - 서브 타이틀 지정
+            ActionBar.setCustomView(int resId), ActionBar.setCustomView(View view)?
+                - 뷰로 CustomView 지정.
+            화살표 아이콘 클릭 이벤트?
+                - Activity.onOptionsItemSelected(MenuItem item) 으로 이벤트 처리.
+                    화살표 아이콘의 ID(리소스 식별자)?
+                        - android.R.id.home 에 지정되어 있다.
+
+    안드로이드 API Level 과 하위 호완성?
+        - 개발자는 앱이 설치될 스마트폰의 안드로이드 버전과 개발자가 사용하는 라이브러리의 버전을 신경써야 한다.
+        minSdkVersion?
+            - minSdkVersion 은 개발환경 설정 부분에 앱이 지원하는 최소 지원 SDK 버전을 지정한다.
+        하위 호완성의 문제?
+            - minSdkVersion 보다 상위 버전에서 제공하는 API 를 사용한다면 앱이 설치된 하위 버전의 스마트폰에서는 에러가 발생할 수 있다.
+            하위 호완성 해결방안?
+                - 구글의 Support 라이브러리, 오픈소스 라이브러리, 코드 레벨에서 직접 처리
+                Support 라이브러리?
+                    - 앱 그레이들(build.gradle) 에 com.android.support:appcompat-v7:26.1.0 의 의존성 설정을 한다.
+                    com.android.support:appcompat-v7:26.1.0?
+                        - 구글에서 지원하는 하위 호환성을 지원하는 라이브러리
+                        appcompat 과 AppCompatActivity?
+                            - appcomat 에서 지원하는 Activity 의 서브 클래스로 하위 호완성을 해결하기 위해 지원.
+                        appcompat 과 테마?
+                            - appcompat 라이브러리를 사용시 appcompat 에서 제공하는 테마를 상속받아 정의해야 된다.
+                        appcompat 사용시 제약?
+                            1.res/values <style> 태그의 parent 속성을 "Theme.AppCompat.Light.DarkActionBar" 지정.
+                            2.ActionBar 획득시 getSupportActionBar() 함수를 이용해 획득한다.
+                개발자 코드로 버전 확인?
+                    - Build.VERSION.SDK_INT 을 이용하여 버전을 확인한다.
+
+    액션바의 메뉴(Menu)?
+        - 액션바의 메뉴는 ActionBar 영역에 속하는 요소이다.
+       액션바의 메뉴 작성 방법 두가지?
+            - 자바 코드, layout resource XML 중 하나를 사용.
+            자바 코드로 액션바의 메뉴 정의?
+                - Activity.onCreateOptionsMenu(Menu menu) 와 Activity.onPrepareOptionsMenu(Menu menu) 함수를 사용하여 메뉴를 정의한다.
+                onCreateOptionsMenu(Menu menu)?
+                    - 메뉴가 만들어질 때 최초 한 번 호출.
+                    액션바의 메뉴(Menu)에 메뉴 아이템(MenuItem)을 추가?
+                        - 인자로 넘어온 Menu.add() 함수를 사용한다.
+                        MenuItem Menu.add(int groupId, int itemId, int order, CharSequence title)?
+                            - int itemId 은 생성한 MenuItem 의 식별자고 title 은 메뉴에 표시할 문자열.
+                onPrepareOptionsMenu(Menu menu)?
+                    - 메뉴가 화면에 보일 때마다 반복 호출.
+                오버플로 아이콘(Overflow Icon)?
+                    - 클릭하면 메뉴 아이템이 보이도록 확장되는 아이콘.
+                액션바의 메뉴아이템(MenuItem)?
+                    - 액션바 메뉴(Menu) 를 구성하는 항목 아이템
+                    MenuItem.setIcon(int iconResId)?
+                    MenuItem.setShortcut(char numericChar, char alphaChar)?
+                    MenuItem.setTitle(CharSequence title)?
+                    MenuItem.setVisible(boolean visible)?
+                    MenuItem.setEnabled(boolean enabled)?
+                    MenuItem.getItemId()?
+                    MenuItem 의 클릭 이벤트 처리?
+                        - Activity.onOptionsItemSelected(MenuItem menuItem) 함수를 이용한다.
+                        클릭 이벤트시 선택된 MenuItem 식별하기?
+                            - MenuItem.add 로 MenuItem 생성시 주어진 int itemId 와 MenuItem.getItemId() 을 이용한다.
+
+           resource XML 을 이용한 액션바의 메뉴(Menu) 정의?
+                - MenuInflater 인스턴스와 layout XML 을 이용하여 정의한다.
+                res/menu 폴더?
+                    - 액션바의 메뉴(Menu) 를 위한 리소스 폴더
+                MenuInflater?
+                    - 해당 Activity 에 메뉴를 적용하는 클래스.
+                    onCreateOptionsMenu(Menu menu)?
+                        - 메뉴가 만들어질 때 한번 호출되는 함수.
+                        Activity.getMenuInflater()?
+                            - MenuInflater 인스턴스를 획득한다.
+                        MenuInflater.inflate(int resId, Menu menu)?
+                            - layout XML 식별자를 인자로 전달해 메뉴의 뷰를 생성한다.
+                            이때 메뉴 아이템(MenuItem) 의 식별자는 layout XML 파일에 정의된 메뉴 아이템의 식별자와 같다.
+               MenuItem 아이콘?
+                    - <item> 태그의 android:icon 속성을 사용하여 지정한다.
+                    액션바의 메뉴 아이콘 생성 방법 두가지?
+                        - <item> 태그의 android:icon 속성 외에 필요한 추가 작업은 Spannable 혹은 MenuBuilder 을 이용하여
+                        세팅해야된다.
+                        MenuBuilder?
+                            - MenuBuilder 객체를 이용해 Menu 의 설정(ex 가시성)을 변경할 수 있다.
+                            MenuBuilder.setOptionalIconsVisible(boolean visible)?
+                            - Menu 의 아이콘 가시성을 제어한다.
+               액션바의 서브 메뉴?
+                    - <item> 태그 내부에 <menu> 태그를 중복 정의한다.
+
+           액션 버튼(Action Button)?
+                - 오버 플로로 나타나는 Menu 의 MenuItem 과 달리 ActionBar 위에 미리 등록된 메뉴.
+                액션 버튼(Action Button)과 액션바의 메뉴 아이템(MenuItem) 차이?
+                    - 빈번하게 사용되는 버튼은 확장해서 선택해야 되는 오버플로보단 액션 버튼이 편리하다.
+                    액션바 정의?
+                        - <item> 태그에 app:showAsAction 속성에 값을 "always" 로 지정한다..
+                        app:showAsAction?
+                            - <item> 태그를 설정한다.
+                            never?
+                                - 기본 값. 오버플로 메뉴 아이템으로 설정
+                            always?
+                                - ActionButton 으로 설정.
+                            ifRoom?
+                                - ActionBar 에 남은 공간이 있으면 ActionButton 아니면 오버플로 메뉴 아이템으로 설정.
+                            withText?
+                                - ActionBar 에 남은 공간이 있으면 문자열 출력, 아니면 생략.
+                            * XML 속성의 구성?
+                                - XML 속성은 네임스페이스:속성이름 으로 구성되어 있다.
+                                네임스페이스 xmlns:app="http://schemas.android.com/apk/res-auto"?
+                                - 표준 네임스페이스 가인 별도 네임스페이스의 URL
+           액션뷰(ActionView)?
+                - ActionButton 의 기능을 확장하여 클릭시 ActionBar 영역으로 자신의 영역을 확장한다.
+                대표적으로 SearchView 클래스가 있다.
+                액션뷰의 영역?
+                    - 클릭시 자신의 영역은 ActionBar 의 영역내에 한해서 확장된다.
+               app:actionViewClass?
+                    - 사용할 ActionViewClass 을 지정한다.
+                    SearchView?
+                        SearchView 획득?
+                            SearchView MenuItem.getActionView()?
+                        검색 Hint 설정?
+                            SearchView.setQueryHint()?
+                        사용자 입력 이벤트?
+                            SearchView.setOnQueryTextListener(SearchView.OnQueryTextListener queryTextListener)?
+                                SearchView.OnQueryTextListener?
+                                    SearchView.OnQueryTextListener.onQueryTextSubmit(String query)?
+                                    SearchView.OnQueryTextListener.onQueryTextChange(String newText)?
+                actionLayout?
+                    app:showAsAction?
+                    app:actionLayout?
+            ContextMenu?
+                ContextMenu 정의?
+                    Activity.onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo)?
+                ContextMenu 이벤트 처리?
+                    Activity.onContextItemSelected(MenuItem item)?
+                ContextMenu 등록?
+                    Activity.registerForContextMenu(View view)?
 

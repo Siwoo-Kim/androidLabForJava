@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/menu_item1"
+          android:icon="@drawable/ic_menu_1"
+          android:title="Select" />
+    <item android:id="@+id/menu_item2"
+          android:icon="@drawable/ic_menu_2"
+          android:title="Layout" />
+
+    <item android:id="@+id/file_item1" android:title="Sub Menu">
+        <menu>
+            <item android:id="@+id/sub_item1"
+                  android:title="Sub Item1"/>
+            <item android:id="@+id/sub_item2"
+                  android:title="Sub Item2"/>
+        </menu>
+    </item>
+
+    <item android:id="@+id/menu_search"
+          app:actionViewClass="android.support.v7.widget.SearchView"
+          app:showAsAction="always"
+          android:icon="@android:drawable/ic_menu_search"
+          android:title="Search" />
+
+    <item android:id="@+id/menu_item3"
+          android:title="Check"
+          app:showAsAction="ifRoom|collapseActionView"
+          android:icon="@android:drawable/ic_menu_day"
+          android:actionLayout="@layout/check_actionview" />
+</menu>

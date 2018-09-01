@@ -13,5 +13,21 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-    
+
+    <style name="ActionTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#00000000</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="StepActionTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#00000000</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBarOverlay">true</item>
+        <!--<item name="windowNoTitle">true</item>-->
+        <!--<item name="windowActionBar">false</item>-->
+    </style>
+
 </resources>
