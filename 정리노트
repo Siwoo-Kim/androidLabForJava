@@ -18,28 +18,31 @@ SDK Manager?
     SDK 라이브러리와 각종 도구를 관리
 
 Android 특징?
-    1.리눅스 기바
-    2.Java or Kotlin을 이용한 앱 개발
-    3.오픈소스
-    4.Fragmentation[단점] - 다양한 업체들의 개발에 의한 기기의 파편화. 에러 혹은 다른 결과를 초래.
+    1.리눅스 기반
 
 Android 아키텍쳐.
     1 LAYER - Linux Kernel
     2 LAYER - HAL (Hardware Abstraction Layer)
         - 하드웨어(카메라, 블루트스) 기능을 위한 자바 표준 인터페이스를 제공.
     3 LAYER - Android Runtime(ART)
-        - ART 가상 머신은 개발 앱의 실행 환경을 제공
+        - ART 가상 머신(ART VM) 은 개발 앱의 실행 환경을 제공
 
-안드로이드 런타임(ART)
-    자바는 런타임 때 JVM이 자바 코드를 수행하지만, 안드로이드은 VM인 ART을 이용해 수행.
-    자바 코드 -> DEX Compiler가 .dex 실행파일 생성 -> ART가 .dex을 실행
+안드로이드 런타임(ART - Android Runtime)
+     - 자바는 런타임 때 JVM 이 자바 코드를 수행하지만, 안드로이드은 VM인 ART 을 이용해 수행.
+     DEX 파일?
+        - Compiler 는 Java 코드를 DEX 파일로 변경하고, Runtime 때 ART 가 DEX 을 해석하여 앱을 실행.
+     ART 의 수행 구조?
+        - 자바 코드 -> Compiler 가 .dex 실행파일 생성 -> ART 가 .dex 을 실행
 
 컴포넌트?
-    컴포넌트는 앱의 구성 단위이며, 여러 개의 컴포넌트가 조합되어 하나의 앱을 구성.
-    일반 자바 클래스와 달리 컴포넌트는 안드로이드가 생명 주기를 관리.
+    - 컴포넌트는 앱의 구성 단위이며, 여러 개의 컴포넌트가 조합되어 하나의 앱을 구성.
+    또한 컴포넌트는 앱 내에서 독립적인 실행 단위.
 
-어플리케이션 라이브러리
-    다른 앱에서 실행 혹은 참조 가능한 컴포넌트의 조합 모음.
+    자바 클래스와 컴포넌트의 차이?
+        - 자바 클래스는 개발자가 클래스의 생명주기를 관리하지만, 컴포넌트는 Android 시스템이 생명주기를 관리.
+
+    어플리케이션 라이브러리?
+        다른 앱에서 실행 혹은 참조 가능한 컴포넌트의 조합 모음.
 
     *정리
         1.안드로이드는 컴포넌트 기반의 개발 방식을 채택한다.
@@ -47,112 +50,125 @@ Android 아키텍쳐.
         3.컴포넌트의 생명주기는 시스템이 관리하고 앱 수행 시점은 다양할 수 있다.
         4.어플리케이션 라이브러리 개념에 의해 한 앱에서 다른 라이브러리를 사용할 수 있다.
 
-컴포넌트의 종류
-    Activity
-        - UI를 구성하기 위한 컴포넌트
-        - 사용자 화면을 제공
-    Service
-        - UI 없이 백그라운드에서 수행되는 컴포넌트
-    ContentProvider
-        - 앱 간 데이터를 공유하기 위한 컴포넌트
-        ex) 카카오톡에서 주소록 앱을 통해 주소를 가져온다
-    BroadcastReceiver
-        - 이벤트 모델로 수행되는 컴포넌트
-        ex) Youtube에서 배터리 부족한 이벤트를 받고 알림을 띄운다.
+    컴포넌트의 종류?
+        Activity
+            - UI를 구성하기 위한 컴포넌트
+            - 사용자 화면을 제공
+        Service
+            - UI 없이 백그라운드에서 수행되는 컴포넌트
+        ContentProvider
+            - 앱 간 데이터를 공유하기 위한 컴포넌트
+            ex) 카카오톡에서 주소록 앱을 통해 주소를 가져온다
+        BroadcastReceiver
+            - 이벤트 모델로 수행되는 컴포넌트
+            ex) Youtube 에서 배터리 부족한 이벤트를 받고 알림을 띄운다.
 
-리소스?
-    정적인 파일을 XML로 외부화
+    리소스?
+        - 유지보수를 위해 정적인 부분을 XML 파일로 외부화.
 
 개발 디렉토리 구조.
-    src/main - 개발자와 관련된 모듈의 시작점
+    src/main - 개발 모듈의 시작점
     src/main/AndroidManifest.xml
         - 앱의 메인 환경 설정 파일.
     src/main/java/패키지/MainActivity.java
-        - 화면 구성을 위한 Activity로 실제로 이 파일이 수행되어 UI가 출력.
+        - 화면 구성을 위한 Activity 로 실제로 이 파일이 수행되어 UI가 출력.
     res
         - 앱의 모든 리소스 파일 디렉토리
     res/drawable
         - 앱의 이미지 파일
     res/layout
-        - UI 구성을 위한 레이아웃 XML 파일
+        - UI 구성을 위한 layout XML 파일
      res/mipmap
         - 앱의 아이콘 이미지
      res/values
-        - 문자열 값
+        - 문자열, 배열, 색, style 등의 값
 
-R.java
-    안드로이드 툴에 의해 자동으로 생성되며, R을 통해 리소스를 참조한다.
-    ex) R.drawable.ic_message -> res/drawable/ic_message.png
+    R.java
+        - R.java 파일은 안드로이드 툴이 자동으로 생성하며, 자바 코드에서 R 을 통해 리소스를 참조한다.
+        ex) R.drawable.ic_message -> res/drawable/ic_message.png
 
-그레이들?
-    안드로이드의 빌드(build) 도구
+    그레이들?
+        안드로이드의 빌드(build) 도구
+        APK 파일?
+            개발한 앱에 포함된 리소스와 자바 코드를 컴파일한 배포용 파일.
+            프로젝트 수준과 모듈 수준의 gradle 파일?
+                - 프로젝트 수준 gradle 은 전체 프로젝트를 위한 설정이며, 모듈 수준의 gradle 은 각 모듈을 위한 설정 파일.
 
-프로젝트 수준의 build.gradle
-    - 전체 프로젝트를 위한 설정.
+    프로젝트 수준의 build.gradle
+        - 전체 프로젝트를 위한 설정.
 
-모듈 수준의 build.gradle
-    - src 폴더에 위치
-    android.compileSdkVersion
-        - 사용하는 컴파일러 버전
-    android.applicationId
-        - 앱의 식별자
-    android.minSdkVersion
-        - SDK 최소 지원 버전
-    android.targetSdkVersion
-        - 사용하고 있는 SDK 버전
-    android.versionCode
-        - 현재 프로젝트 앱의 버전
-    dependencies
-        - 앱의 의존 라이브러리
+    모듈 수준의 build.gradle
+        - src 폴더에 위치
+        android.compileSdkVersion?
+            - 사용하는 컴파일러 버전
+        android.applicationId
+            - 앱의 식별자
+        android.minSdkVersion
+            - SDK 최소 지원 버전
+           해당 sdk 보다 하위 버전인 스마트폰에서는 앱이 설치되지 않는다.
+        android.targetSdkVersion
+            - 사용하고 있는 SDK 버전
+        android.versionCode
+            - 현재 프로젝트 앱의 버전
+        dependencies
+            - 앱의 의존 라이브러리
+            dependencies.implementation?
+                - 앱의 인존성 라이브러리를 명시.
 
 AndroidManifest.xml
     - 앱의 메인 환경 설정 파일.
-    manifest.package
-        - 앱의 식별자
-    application
-        - 앱의 구성 요소를 등록을 위한 태그
-        - 모든 컴포넌트 클래스는 application 하위 태그에 등록
-    application:icon
-        - 앱의 아이콘 이미지
-    application:label
-        - 앱의 이름
-        ex) <application android:icon="@mipmap/ic_launcher" ... />
-            @mipmap/ic_launcher 는 R.mipmap.ic_launcher와 동일
-            @ = R = res 디렉토리
-    activity
-        - 앱의 Activity 컴포넌트 등록
-        ex) <activity android:name=".MainActivity />
-    activity.name
-        - 등록하고자 하는 Java 클래스명을 명시
+    <manifest> 태그의 package 속성
+        - 앱의 식별자, build.gradle 의 android.applicationId 속성과 동일해야 된다.
+        <application> 태그
+            - 앱의 구성 요소를 등록을 위한 태그
+            - 모든 컴포넌트 클래스는 application 하위 태그에 등록
+        application:icon
+            - 앱의 아이콘 이미지
+        application:label
+            - 앱의 이름
+            ex) <application android:icon="@mipmap/ic_launcher" ... />
+                @mipmap/ic_launcher 는 R.mipmap.ic_launcher 와 동일
+                @ = R = res 디렉토리
+        <activity> 태그?
+            - 앱의 Activity 컴포넌트 등록
+            <activity> 태그의 name 속성?
+                - 액티비티의 클래스명을 명시하기 위한 속성.
+                ex) <activity android:name=".MainActivity />
+                <intent-filter> 태그?
+                    - 앱의 아이콘을 클릭했을 때 실행되기 위해 설정.
 
 MainActivity.java
     - 사용자가 앱을 실행시 호출되는 화면 구성을 위한 Activity
-    - AppCompatActivity을 상속하며 AppCompatActivity는 Activity를 상속.
+    - AppCompatActivity 를 상속하며 AppCompatActivity 는 Activity 를 상속.
     MainActivity.onCreate(Bundle savedInstanceState)
         - 액티비티가 실행시 호출되는 메서드
     MainActivity.setContentView()
         - 화면 출력 함수
 
-
-
 UI 액티비티-뷰 구조
     Activity(액티비티)?
         - 안드로이드 4개의 컴포넌트 중 하나로써 화면 출력을 담당한다.
+        앱의 실행 단위 컴포넌트이다.
+        액티비티는 하나 이상의 View 클래스로 구성된다.
+        Activity.setContentView(View view)?
+        Activity.setContentView(int layoutResID)?
+            - 액티비티에서 해당 뷰를 출력한다.
     뷰(View)?
         - UI 이자 Activity 의 내용물.
-    Activity.setContentView(View view)
-    Activity.setContentView(int layoutResID)
         - 액티비티에서 뷰를 출력한다.
+        ViewGroup.addView(View view)?
+                - 레이아웃에 뷰를 추가한다.
+                ViewGroup(뷰그룹) 에 해당 뷰(View) 를 추가 시킨다.
+                논리적인 그룹으로 묶어 한꺼번에 제어하기 위해 사용.
+
     두가지 UI 작성법?
         - Activity 의 자바 코드로의 작성과 layout XML 파일 이용.
-
     레이아웃 XML?
         - XML 파일을 이용해 UI(View) 를 구성한다.
         Launcher Activity?
             - 다른 액티비티와 관련없이 독립적으로 실행한다.
 
-
-    뷰 태그의 기초 속성?
+    뷰의 기초 속성?
         - 뷰의 기초 속성이란 모든 뷰에서 사용하는 공통 속성을 의미한다.
         id 기초 속성?
             - 뷰의 식별자 속성. id 속성으로 자바 코드에서 참조 가능.
@@ -160,8 +176,8 @@ UI 액티비티-뷰 구조
                     - 문자열을 출력하는 뷰
             *R.java?
                 - R 은 리소스(Resource) 을 의미한다. id 식별자는 리소스에 등록된다.
-        Activity.findViewById(int resId)?
-            - 등록한 id 식별자로 View 의 인스턴스를 획득.
+            Activity.findViewById(int resId)?
+                - 등록한 id 식별자로 View 의 인스턴스를 획득.
 
         layout_width, layout_height 기초 속성?
             - 뷰의 화면 표시 크기를 지정한다.
@@ -185,48 +201,53 @@ UI 액티비티-뷰 구조
         clickable 기초 속성?
             - TextView, ImageView 은 clickable 속성의 true 을 지정해야 클릭 이벤트에 반응한다.
             *사실이 아니다?
+            View.setOnClickListener(OnClickListener listener)?
+                - 해당 뷰의 Click 이벤트 콜백 등록.
 
         visibility 기초 속성?
-            - 뷰이 가시성을 설정한다.
+            - View 의 가시성을 설정한다.
             :true, invisible, gone
             invisible 과 gone 의 차이?
                 - invisible 과 gone 은 모두 가시성을 잃지만
-                invisible 은 크기를 확보한 상태이고
-                gone 은 크기를 확보하지 않는다.
-
+                invisible 은 크기를 확보
+                gone 은 크기를 확보하지 않음.
             View.setVisibility(int visibility)
                 - 자바 코드에서 가시성을 설정한다.
                 * View.VISIBLE, View.INVISIBLE, View.GONE
+
+    뷰의 종류?
+        Button, EditText, TextView, ImageView, ListView, Spinner
 
     뷰의 계층구조?
         - 복잡한 화면을 구성하기 위해 뷰 객체 간의 계층을 이룬다.
         DOM (Document Object Model) 구조를 따르며 Composite 패턴이 적용된 구조이다.
 
         View 클래스?
-            - 화면을 구성하기 위한 클래스.
+            - 모든 뷰의 최상위 클래스.
             모든 View 의 최상위 클래스이면서 UI 의 Widget 과 동의어.
             Activity 에서 출력되는 클래스는 모두 View 의 서브 클래스이다.
         ViewGroup 클래스?
             - View 의 서브 클래스이자 View 의 컨테이너(Container).
+            여러 개의 뷰를 뷰그룹(ViewGroup)에 포함하여 한꺼번에 제어하기 위한 목적으로 사용.
             뷰를 논리적인 그룹으로 묶는다.
             ex) Layout 클래스
 
-
         layout XML 로 계층구조 구현 방법?
             - 태그의 상하 관계를 이용한다.
+            서브 태그로 등록한 View 객체는 상위 태그 객체에 포함된다.
+
         자바 코드로 계층구조 구현 방법?
-            - public void View.addView(View view) 함수를 이용한다.
+            - ViewGroup.addView(View view) 함수를 이용한다.
 
     뷰 클래스
         - 안드로이드는 다양한 뷰 클래스를 제공한다.
         TextView?
             - 문자열을 화면에 출력하는 View
             TextView 의 속성?
-                android:text?
+                TextView.text, android:text?
                     - 화면에 출력하는 문자열
-                android:typeface?
-                    - 문자열의 폰트를 지정.
-                        : normal, sans, serif, monospace
+                TypeView.typeface ,android:typeface?
+                    - 문자열의 폰트를 지정. : normal, sans, serif, monospace
                     public static Typeface createFromAsset(AssetManager mgr, String path)?
                         - 리소스로 부터 Typeface 객체를 획득한다.
                     View.setTypeface(Typeface typeface)?
@@ -236,16 +257,20 @@ UI 액티비티-뷰 구조
                         : normal, bold, italic
                 android:textColor?
                     - 문자열의 색상을 변경.
+                    RGB 포맷?
+                        - 색깔을 정의한 16 진수로 숫자.
                 android:textSize?
                     - 문자열 폰트의 크기를 지정.
                 android:autoLink? *
                     - 문자열을 parsing 해 링크 형태로 변환한다. 링크 형태의 단어들은 자동으로 다양한 Activity 로 연결된다.
-                    : web, email, phone
-                maxLines?
-                    - 최대 문자열을 지정한다. 문자열을 넘어선 뷰 화면에서 문자열들은 생략된다.
-                ellipsize?
-                    - maxLines 와 같이 사용하며, 문자열이 지정한 최대 문자열을 초과할 시 줄임 표시(..) 를 추가한다.
-
+                    android:autoLink 의 속성값?
+                        : web, email, phone
+                android:maxLines?
+                    - 최대 문자열 라인수을 지정한다. 지정된 라인수를 넘어선 문자열은 뷰 화면에서 생략된다.
+                android:ellipsize?
+                    - maxLines 와 같이 사용하며, 문자열이 지정한 최대 문자열 라인수 초과할 시 줄임 표시(..) 를 추가한다.
+                    android:ellipsize 의 속성값?
+                        : start, end, middle
         ImageView?
             android:src
             android:maxWidth, android:maxHeight
@@ -1407,10 +1432,9 @@ ActionBar?
         Window?
             - 액티비티가 출력되는 전체 창.
             Content 영역?
-                - setContentView(View view) 함수로 출력되는 View 영역.
+                - Activity.setContentView(View view) 함수로 출력되는 View 영역.
             ActionBar 영역?
-                - Window 의 한 영역이며 App Icon, View Control, Action Button, Overflow Menu 로 구성.
-
+                - Window 의 한 영역이며 App Icon, View Control(*deprecated), Action Button(ActionButton), Overflow Menu(Menu) 로 구성.
         ActionBar 비활성화?
             - res/values/styles.xml 파일에 테마를 설정할 때, windowActionBar 을 false, windowNoTitle 을 true 로 지정.
             res/values/styles.xml?
@@ -1419,7 +1443,6 @@ ActionBar?
                 <item name="windowActionBar">
         ActionBar 배경 이미지 Overlay.
                 - res/values/styles.xml 파일에 테마를 설정할 때, <item name="windowActionBarOverlay"> 을 true 로 설정한다.
-
         ActionBar 객체 획득?
             - Activity.getSupportActionBar() 함수로 획득한다.
         ActionBar 제어?
@@ -1431,7 +1454,7 @@ ActionBar?
             ActionBar 의 label?
                 - AndroidManifest.xml 파일의 <activity> 태그에 android:label 속성으로 label(액션바 타이틀) 설정.
             ActionBar.setDisplayHomeAsUpEnabled(boolean showHomeAsUp)?
-                - 아이콘을 Up 이미지로 표시 설정 (아이콘을 표시할 지의 여부 설정)
+                - 아이콘을 Up 이미지로 표시 설정 (화살표 아이콘을 표시할 지의 여부 설정)
             ActionBar.setDisplayShowCustomEnabled(boolean showCustom)?
                 - CustomView 표시 설정
             ActionBar.setDisplayShowHomeEnabled(boolean showHome)?
@@ -1440,6 +1463,7 @@ ActionBar?
                 - 타이틀 문자열 표시 설정
             ActionBar.setDisplayUseLogoEnabled(boolean useLogo)?
                 - 로고 표시 설정
+
             ActionBar.setLogo(int resId), ActionBar.setLogo(Drawable logo)?
                 - 로고 지정.
             ActionBar.setTitle(int resId), ActionBar.setTitle(CharSequence subtitle)?
@@ -1499,7 +1523,7 @@ ActionBar?
                     MenuItem.setVisible(boolean visible)?
                     MenuItem.setEnabled(boolean enabled)?
                     MenuItem.getItemId()?
-                    MenuItem 의 클릭 이벤트 처리?
+                    !MenuItem 의 클릭 이벤트 처리?
                         - Activity.onOptionsItemSelected(MenuItem menuItem) 함수를 이용한다.
                         클릭 이벤트시 선택된 MenuItem 식별하기?
                             - MenuItem.add 로 MenuItem 생성시 주어진 int itemId 와 MenuItem.getItemId() 을 이용한다.
@@ -1576,4 +1600,12 @@ ActionBar?
                     Activity.onContextItemSelected(MenuItem item)?
                 ContextMenu 등록?
                     Activity.registerForContextMenu(View view)?
+
+커스텀 뷰?
+    커스텀 뷰 작성 세가지 방법?
+        View 상속 커스텀 뷰?
+            View.onDraw(CANVAS canvas)?
+    커스텀 속성?
+        res/values/attrs.xml?
+            <declare-styleable>?
 
