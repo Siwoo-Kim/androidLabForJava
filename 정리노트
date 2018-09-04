@@ -149,28 +149,29 @@ UI 액티비티-뷰 구조
     Activity(액티비티)?
         - 안드로이드 4개의 컴포넌트 중 하나로써 화면 출력을 담당한다.
         앱의 실행 단위 컴포넌트이다.
-        액티비티는 하나 이상의 View 클래스로 구성된다.
+        Activity 는 하나 이상의 View 클래스로 구성된다.
         Activity.setContentView(View view)?
         Activity.setContentView(int layoutResID)?
             - 액티비티에서 해당 뷰를 출력한다.
     뷰(View)?
-        - UI 이자 Activity 의 내용물.
-        - 액티비티에서 뷰를 출력한다.
+        - UI (Widget) 이자 Activity 의 내용물.
+        액티비티에서 뷰를 출력한다.
         ViewGroup.addView(View view)?
-                - 레이아웃에 뷰를 추가한다.
+                - 뷰그룹(레이아웃)에 뷰를 추가한다.
                 ViewGroup(뷰그룹) 에 해당 뷰(View) 를 추가 시킨다.
-                논리적인 그룹으로 묶어 한꺼번에 제어하기 위해 사용.
+                ViewGroup 은 여러 View 를 논리적인 그룹으로 묶어 한꺼번에 제어하기 위해 사용.
 
     두가지 UI 작성법?
         - Activity 의 자바 코드로의 작성과 layout XML 파일 이용.
+
     레이아웃 XML?
         - XML 파일을 이용해 UI(View) 를 구성한다.
         Launcher Activity?
             - 다른 액티비티와 관련없이 독립적으로 실행한다.
 
-    뷰의 기초 속성?
+    뷰(View)의 기초 속성?
         - 뷰의 기초 속성이란 모든 뷰에서 사용하는 공통 속성을 의미한다.
-        id 기초 속성?
+        View.id, id 기초 속성?
             - 뷰의 식별자 속성. id 속성으로 자바 코드에서 참조 가능.
             *TextView?
                     - 문자열을 출력하는 뷰
@@ -179,34 +180,36 @@ UI 액티비티-뷰 구조
             Activity.findViewById(int resId)?
                 - 등록한 id 식별자로 View 의 인스턴스를 획득.
 
-        layout_width, layout_height 기초 속성?
+        View.layoutWidth, View.layoutHeight, android:layout_width, android:layout_height 기초 속성?
             - 뷰의 화면 표시 크기를 지정한다.
             layout_width 은 가로, layout_height 은 세로 크기를 결정한다.
+                View.layoutWidth, View.layoutHeight 의 속성값?
+                    : match_parent, wrap_content
+                    match_parent, fill_content?
+                        - 해당 뷰의 크기가 부모 뷰의 크기를 모두 차지한다.
+                    wrap_content
+                        - Content 의 크기에 맞춰 자동으로 뷰의 크기를 결정한다.
+                    [Number]px
+                        - 픽셀로 뷰의 크기를 직접 조정한다.
 
-            match_parent, fill_content?
-                - 해당 뷰의 크기가 부모 뷰의 크기를 모두 차지한다.
-            wrap_content
-                - Content 의 크기에 맞춰 자동으로 뷰의 크기를 결정한다.
-            [Number]px
-                - 픽셀로 뷰의 크기를 직접 조정한다.
-
-        margin 기초 속성?
+        View.margin, android:margin 기초 속성?
             - 뷰와 뷰 사이의 간격을 지정한다.
                 : layout_marginLeft, layout_marginRight, layout_marginTop, layout_marginBottom
-        padding 기초 속성?
+        View.padding, android:padding 기초 속성?
             - 뷰의 테두리(변) 과 뷰의 내용물의 간격을 지정한다.
             padding 이 커질수록 화면의 차지 비율이 늘어난다.
                 : paddingLeft, paddingRight, paddingTop, paddingBottom
 
-        clickable 기초 속성?
+        View.clickable, android:clickable 기초 속성?
             - TextView, ImageView 은 clickable 속성의 true 을 지정해야 클릭 이벤트에 반응한다.
             *사실이 아니다?
-            View.setOnClickListener(OnClickListener listener)?
+            View.setOnClickListener(View.OnClickListener listener)?
                 - 해당 뷰의 Click 이벤트 콜백 등록.
 
-        visibility 기초 속성?
+        View.visibility, android:visibility 기초 속성?
             - View 의 가시성을 설정한다.
-            :true, invisible, gone
+            View.visibility 의 속성값?
+                :true, invisible, gone
             invisible 과 gone 의 차이?
                 - invisible 과 gone 은 모두 가시성을 잃지만
                 invisible 은 크기를 확보
@@ -215,17 +218,22 @@ UI 액티비티-뷰 구조
                 - 자바 코드에서 가시성을 설정한다.
                 * View.VISIBLE, View.INVISIBLE, View.GONE
 
+        View.gravity, android:gravity 기초 속성?
+            - 해당 뷰 내용물의 정렬 위치를 지정한다.
+            기본 값은 left top 이다.
+
     뷰의 종류?
         Button, EditText, TextView, ImageView, ListView, Spinner
 
     뷰의 계층구조?
         - 복잡한 화면을 구성하기 위해 뷰 객체 간의 계층을 이룬다.
-        DOM (Document Object Model) 구조를 따르며 Composite 패턴이 적용된 구조이다.
+        DOM (Document Object Model) 구조를 따르며 GOF 의 Composite 패턴이 적용된 구조이다.
 
         View 클래스?
             - 모든 뷰의 최상위 클래스.
             모든 View 의 최상위 클래스이면서 UI 의 Widget 과 동의어.
             Activity 에서 출력되는 클래스는 모두 View 의 서브 클래스이다.
+
         ViewGroup 클래스?
             - View 의 서브 클래스이자 View 의 컨테이너(Container).
             여러 개의 뷰를 뷰그룹(ViewGroup)에 포함하여 한꺼번에 제어하기 위한 목적으로 사용.
@@ -248,10 +256,13 @@ UI 액티비티-뷰 구조
                     - 화면에 출력하는 문자열
                 TypeView.typeface ,android:typeface?
                     - 문자열의 폰트를 지정. : normal, sans, serif, monospace
-                    public static Typeface createFromAsset(AssetManager mgr, String path)?
+                    static Typeface Typeface.createFromAsset(AssetManager mgr, String path)?
                         - 리소스로 부터 Typeface 객체를 획득한다.
+                        Activity.getAssets()?
+                            - AssetManager 인스턴스를 획득한다.
                     View.setTypeface(Typeface typeface)?
                         - Typeface 객체를 이용하여 출력하는 문자열의 폰트를 바꾼다.
+
                 android:textStyle?
                     - 문자열 효과를 지정
                         : normal, bold, italic
@@ -271,28 +282,68 @@ UI 액티비티-뷰 구조
                     - maxLines 와 같이 사용하며, 문자열이 지정한 최대 문자열 라인수 초과할 시 줄임 표시(..) 를 추가한다.
                     android:ellipsize 의 속성값?
                         : start, end, middle
+
         ImageView?
-            android:src
-            android:maxWidth, android:maxHeight
+            - 이미지를 출력할 때 사용하는 뷰.
+            ImageView.src, android:src?
+                - 화면에 출력하는 이미지를 지정.
+            ImageView.maxWidth, ImageView.maxHeight, android:maxWidth, android:maxHeight?
+                - 이미지의 출력 크기를 변경.
+                ImageView.adjustViewBounds 속성과 같이 사용해야 된다.
+                    layout_width="wrap_content" 와 maxWidth 의 차이?
+                        - wrap_content 은 View 자체의 크기를 지정하므로 이미지 출력 크기가 크다면 overlay 되버린다.
+                        maxWidth 은 이미지 출력 크기를 직접 지정하므로 지정한 크기에 맞게 조절할 수 있다.
             android:adjustViewBounds?
+                - 이미지의 크기를 변경할 때 가로세로 비율을 유지할지 지정.
             android:tint?
+                - 이미지 위에 입힐 색상을 지정한다.
 
         EditText?
-            android:lines?
-            android:maxLines?
-            android:inputType?
-            android:text?
-            android:textMultiLine
-            android:gravity
+            - 유저로부터 문자열을 입력받을 때 사용하는 뷰.
+            한 줄 입력창으로 출력되다 개행키를 입력 받으면, 입력 창의 라인수를 늘림.
 
+            EditText.lines, android:lines?
+                - 화면에 보일 라인수 지정.
+                초기에 지정한 라인수의 입력창을 출력, 개행을 누르면 스크롤 되어 커서가 다음 라인으로 이동하지만, 화면에 보일 라인수를 고정된다.
+            EditText.maxLines, android:maxLines?
+                - 화면에 보일 라인수 지정.
+                초기에 하나의 라인의 입력창을 출력, 개행을 누르면 스크롤 되어 커서가 다음 라인으로 이동과 동시에 확장하고, 화면에 보일 라인수를 고정된다.
+            EditText.inputType, android:inputType?
+                - 키보드 모드를 제어하고, 입력 라인수을 제한한다.
+                EditText.inputType 의 키모드 모드 제한?
+                    - 휴대폰 모드의 키보드, 혹은 일반 모드의 키보드를 지정할 수 있다
+                    EditText.inputType 의 속성값?
+                        : phone, number, textEmailAddress, textPassword
+                EditText.inputType 의 입력 라인수 제한?
+                    - EditText.inputType 의 속성값 text, phone, number, textEmailAddress 은 입력 라인을 하나만을 허용한다.
+                    EditText.inputType 의 속성값 none 은 입력 라인수를 무한으로 허용한다.
+            EditText.hint, android:hint?
+                - hint 을 설정한다.
         Button?
+            - 사용자의 이벤트를 처리하기 위한 뷰.
+            Button 을 상속한 View 클래스?
+                - CompoundButton extends Button
+                    - CheckBox extends CompoundButton
+                    - RadioButton extends CompoundButton
+                    - ToggleButton extends CompoundButton
             Checkbox extends CompoundButton?
-                isChecked()
-                setChecked(boolean)
-                toggle()
+                - 선택 혹은 선택되지 않은 두 가지 상태를 표현하는 뷰.
+
+                Checkbox.isChecked()?
+                    - 체크 상태를 반환.
+                Checkbox.setChecked(boolean checked)?
+                    - 해당 인스턴스의 체크 상태를 설정
+                Checkbox.toggle()?
+                    - 현재 체크 상태의 반대 체크 상태로 설정.
                 setOnCheckedChangeListener(OnCheckedChangeListener)
             RadioButton extends CompoundButton?
+                - RadioGroup 은 하나 이상의 RadioButton 으로 구성되며
+                RadioGroup 에서는 하나의 Check 상태를 가지는 버튼만을 가질 수 있다.
                 RadioGroup?
+                    - RadioGroup 은 하나 이상의 RadioButton 을 구성하며 아래 함수를 지원한다.
+                        int RadioGroup.check()?
+                        RadioGroup.clearCheck()?
+                        RadioGroup.getCheckedRadioButtonId()?
 
     assets 폴더?
     strings.xml?
